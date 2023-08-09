@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"runtime/debug"
 
 	"github.com/charmbracelet/log"
 	"github.com/urfave/cli/v2"
@@ -15,6 +17,7 @@ func init() {
 }
 
 func main() {
+	buildInfo, _ := debug.ReadBuildInfo()
 	app := &cli.App{
 		Name:  "goup",
 		Usage: "update dependencies for all projects at once",
@@ -36,9 +39,8 @@ func main() {
 				Usage:   "include hidden directories",
 			},
 			&cli.BoolFlag{
-				Name:    "vendor",
-				Aliases: []string{"v"},
-				Usage:   "include vendor directory",
+				Name:  "vendor",
+				Usage: "include vendor directory",
 			},
 			&cli.StringSliceFlag{
 				Name:    "exclude",
@@ -58,6 +60,7 @@ func main() {
 			},
 		},
 		Suggest: true,
+		Version: fmt.Sprintf("%s build with %s", buildInfo.Main.Version, buildInfo.GoVersion),
 	}
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
