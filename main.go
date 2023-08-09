@@ -10,7 +10,7 @@ import (
 func init() {
 	log.SetOutput(os.Stderr)
 	log.SetLevel(log.InfoLevel)
-	log.SetReportTimestamp(true)
+	log.SetReportTimestamp(false)
 	log.SetTimeFormat("2006.01.02 15:04:05")
 }
 
@@ -25,6 +25,7 @@ func main() {
 				Action: func(_ *cli.Context, debug bool) error {
 					if debug {
 						log.SetLevel(log.DebugLevel)
+						log.SetReportTimestamp(true)
 					}
 					return nil
 				},
