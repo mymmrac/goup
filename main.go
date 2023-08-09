@@ -17,7 +17,7 @@ func init() {
 func main() {
 	app := &cli.App{
 		Name:  "goup",
-		Usage: "Update dependencies for all projects at once",
+		Usage: "update dependencies for all projects at once",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
 				Name:  "debug",
@@ -29,9 +29,25 @@ func main() {
 					return nil
 				},
 			},
+			&cli.BoolFlag{
+				Name:    "all",
+				Aliases: []string{"a"},
+				Usage:   "include hidden directories",
+			},
+			&cli.BoolFlag{
+				Name:    "vendor",
+				Aliases: []string{"v"},
+				Usage:   "include vendor directory",
+			},
+			&cli.StringSliceFlag{
+				Name:    "exclude",
+				Aliases: []string{"e"},
+				Usage:   "exclude directories that match pattern",
+			},
 		},
-		ArgsUsage:            "[dirs...] paths of directories that should be update",
+		ArgsUsage:            "[dirs]...",
 		EnableBashCompletion: true,
+		HideHelpCommand:      true,
 		BashComplete:         cli.DefaultAppComplete,
 		Action:               run,
 		Authors: []*cli.Author{
