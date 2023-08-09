@@ -34,6 +34,11 @@ func main() {
 				},
 			},
 			&cli.BoolFlag{
+				Name:    "recursive",
+				Aliases: []string{"r"},
+				Usage:   "recursively walk directories",
+			},
+			&cli.BoolFlag{
 				Name:    "all",
 				Aliases: []string{"a"},
 				Usage:   "include hidden directories",

@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"strings"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 )
 
 func run(ctx *cli.Context) error {
+	recursive := ctx.Bool("recursive")
 	includeHidden := ctx.Bool("all")
 	includeVendor := ctx.Bool("vendor")
 	excludePatterns := ctx.StringSlice("exclude")
@@ -35,6 +37,10 @@ func run(ctx *cli.Context) error {
 			}
 
 			isDir := d.IsDir()
+
+			if !recursive && isDir && !slices.Contains(paths, path) {
+				return filepath.SkipDir
+			}
 
 			if !includeHidden && isDir && containsHiddenDir(path) {
 				log.Debugf("Skip hidden directory: %s", path)
