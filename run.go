@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/log"
 	"github.com/urfave/cli/v2"
@@ -66,6 +67,8 @@ func run(ctx *cli.Context) error {
 				return nil
 			}
 
+			startTime := time.Now()
+
 			pathAbs, err := filepath.Abs(path)
 			if err != nil {
 				return err
@@ -103,13 +106,14 @@ func run(ctx *cli.Context) error {
 
 			runModTidy(pathDir)
 
+			log.Infof("Done in %s", time.Since(startTime).Round(time.Second/100))
 			return nil
 		})
 		if err != nil {
 			return err
 		}
 	}
-	log.Info("Done")
+	log.Info("Completed")
 	return nil
 }
 
