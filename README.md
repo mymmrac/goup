@@ -1,6 +1,6 @@
 # :arrow_up: GoUp
 
-Update all direct and only required indirect dependencies recursively in all folders
+Update all direct and only required indirect dependencies in multiple modules (even recursively)
 
 ## :gear: Install
 
@@ -34,8 +34,8 @@ Update in all subdirectories recursively excluding some that match pattern
 goup -r -e "some*" -e "?other" dir
 ```
 
-> For pattern matching, see [more here](https://pkg.go.dev/path/filepath#Match).
+> For pattern matching, see [more here](https://pkg.go.dev/path/filepath#Match)
 
 ## :closed_lock_with_key: License
 
-GoUp is distributed under [MIT licence](LICENSE).
+GoUp is distributed under [MIT licence](LICENSE)
