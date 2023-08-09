@@ -40,7 +40,8 @@ func run(ctx *cli.Context) error {
 			cmd.Stderr = os.Stderr
 			out, err := cmd.Output()
 			if err != nil {
-				return err
+				log.Errorf("Get modules list, err: %s", err)
+				return nil
 			}
 
 			modules := strings.Split(strings.TrimSpace(string(out)), "\n")
