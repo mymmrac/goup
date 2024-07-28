@@ -15,6 +15,7 @@ import (
 )
 
 func run(ctx *cli.Context) error {
+	verbose := ctx.Bool("verbose")
 	recursive := ctx.Bool("recursive")
 	includeHidden := ctx.Bool("all")
 	includeVendor := ctx.Bool("vendor")
@@ -29,7 +30,7 @@ func run(ctx *cli.Context) error {
 	}
 	log.Debugf("Lookup paths: %s", paths)
 
-	log.Info("Stating update")
+	log.Info("Starting update")
 	for _, path := range paths {
 		err := filepath.WalkDir(path, func(path string, d fs.DirEntry, err error) error {
 			if err != nil {
@@ -98,7 +99,10 @@ func run(ctx *cli.Context) error {
 
 			runModTidy(pathDir)
 
-			for _, module := range modules {
+			for i, module := range modules {
+				if verbose {
+					log.Infof("[%d/%d] Updating %s", i, len(modules), module)
+				}
 				cmd = exec.Command("go", "get", module)
 				cmd.Dir = pathDir
 				cmd.Stdin = os.Stdin
@@ -107,6 +111,9 @@ func run(ctx *cli.Context) error {
 				if err != nil {
 					log.Errorf("Failed to update %s, err: %s", module, err)
 					break
+				}
+				if verbose {
+					log.Infof("Updated %s", module)
 				}
 			}
 

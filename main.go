@@ -34,6 +34,11 @@ func main() {
 				},
 			},
 			&cli.BoolFlag{
+				Name:    "verbose",
+				Aliases: []string{"vv"},
+				Usage:   "verbose output",
+			},
+			&cli.BoolFlag{
 				Name:    "recursive",
 				Aliases: []string{"r"},
 				Usage:   "recursively walk directories",
